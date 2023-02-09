@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhi4xquj5clcp"]
+
+[ext_resource type="Texture2D" uid="uid://c7i2cvxavm17j" path="res://art/player/john_static.png" id="1_aouje"]
+[ext_resource type="Script" path="res://player.gd" id="1_me4ex"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nbo36"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g5km0"]
+radius = 5.0
+height = 18.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v2qos"]
+size = Vector2(7, 5.5)
+
+[node name="Player" type="RigidBody2D"]
+position = Vector2(-48, 4)
+mass = 60.0
+physics_material_override = SubResource("PhysicsMaterial_nbo36")
+lock_rotation = true
+script = ExtResource("1_me4ex")
+
+[node name="Sprite2d" type="Sprite2D" parent="."]
+position = Vector2(1, 13)
+texture = ExtResource("1_aouje")
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="."]
+position = Vector2(-6, 13)
+shape = SubResource("CapsuleShape2D_g5km0")
+
+[node name="Area2d" type="Area2D" parent="."]
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="Area2d"]
+position = Vector2(2, 4)
+shape = SubResource("RectangleShape2D_v2qos")
+
+[connection signal="body_entered" from="Area2d" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2d" to="." method="_on_area_2d_body_exited"]
